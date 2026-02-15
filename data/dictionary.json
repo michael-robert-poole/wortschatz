@@ -1,0 +1,22 @@
+[
+  { "gender": "das", "word": "Haus", "plural": "Häuser", "meanings": ["house"] },
+  { "gender": "der", "word": "Tisch", "plural": "Tische", "meanings": ["table"] },
+  { "gender": "die", "word": "Katze", "plural": "Katzen", "meanings": ["cat"] },
+  { "gender": "der", "word": "Hund", "plural": "Hunde", "meanings": ["dog"] },
+  { "gender": "das", "word": "Buch", "plural": "Bücher", "meanings": ["book"] },
+  { "gender": "die", "word": "Schule", "plural": "Schulen", "meanings": ["school"] },
+  { "gender": "der", "word": "Baum", "plural": "Bäume", "meanings": ["tree"] },
+  { "gender": "das", "word": "Kind", "plural": "Kinder", "meanings": ["child"] },
+  { "gender": "die", "word": "Stadt", "plural": "Städte", "meanings": ["city", "town"] },
+  { "gender": "der", "word": "Stuhl", "plural": "Stühle", "meanings": ["chair"] },
+  { "gender": "die", "word": "Tür", "plural": "Türen", "meanings": ["door"] },
+  { "gender": "das", "word": "Wasser", "plural": "Wasser", "meanings": ["water"] },
+  { "gender": "der", "word": "Apfel", "plural": "Äpfel", "meanings": ["apple"] },
+  { "gender": "die", "word": "Blume", "plural": "Blumen", "meanings": ["flower"] },
+  { "gender": "das", "word": "Bett", "plural": "Betten", "meanings": ["bed"] },
+  { "gender": "der", "word": "Zug", "plural": "Züge", "meanings": ["train"] },
+  { "gender": "die", "word": "Straße", "plural": "Straßen", "meanings": ["street", "road"] },
+  { "gender": "das", "word": "Fenster", "plural": "Fenster", "meanings": ["window"] },
+  { "gender": "der", "word": "Schlüssel", "plural": "Schlüssel", "meanings": ["key"] },
+  { "gender": "die", "word": "Küche", "plural": "Küchen", "meanings": ["kitchen"] }
+]
