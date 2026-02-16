@@ -41,9 +41,25 @@ class WordlookupSpec extends AsyncFlatSpec with AsyncIOSpec with Matchers {
     wordlookup.levenshteinDist(s1, s2) shouldBe 5
   }
 
-  "Kitten vs Kitten" should "return 5" in {
+  "Kitten vs kitten" should "return 0" in {
     val s1 = "Kitten"
     val s2 = "kitten"
     wordlookup.levenshteinDist(s1, s2) shouldBe 0
+  }
+
+  "fuzzy matching" should "suggest the closest word when input is close" in {
+    val result = wordlookup.wordlookup("huus", dict)
+    result should include("Did you mean: Haus?")
+    result should include("Das Haus (plural: Häuser) translates to house")
+  }
+
+  it should "suggest Tisch for tsch" in {
+    val result = wordlookup.wordlookup("tsch", dict)
+    result should include("Did you mean: Tisch?")
+    result should include("Der Tisch (plural: Tische) translates to table")
+  }
+
+  it should "return not found when no word is close" in {
+    wordlookup.wordlookup("xyzzy", dict) shouldBe "Noun is not on the learning curriculum"
   }
 }

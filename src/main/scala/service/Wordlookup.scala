@@ -2,26 +2,28 @@ package service
 
 import domain.models.{Article, Noun}
 
-import scala.{+:, :+}
-import scala.collection.:+
-
 class Wordlookup {
+
+  private def formatNoun(noun: Noun): String =
+    s"${Article.articleLookup(noun.gender)} ${noun.word} (plural: ${noun.plural}) translates to ${noun.meanings.mkString(", ")}"
 
   def wordlookup(word: String, dict: Map[String, Noun]): String = {
     dict.get(word.toLowerCase) match {
-      case Some(value) => s"${Article.articleLookup(value.gender)} ${value.word} (plural: ${value.plural}) translates to ${value.meanings.mkString(", ")}"
+      case Some(value) => formatNoun(value)
       case None =>
-        val closeToWord = dict.keys.filter(w => levenshteinDist(w, word) <= 2)
-        if (closeToWord.isEmpty) {
+        val candidates = dict.map { case (k, _) => (k, levenshteinDist(k, word)) }.filter(_._2 <= 2)
+        if (candidates.isEmpty) {
           "Noun is not on the learning curriculum"
         } else {
-          "Did you mean one of" + closeToWord.mkString(",")
+          val bestKey = candidates.minBy(_._2)._1
+          val noun = dict(bestKey)
+          s"Did you mean: ${noun.word}?\n${formatNoun(noun)}"
         }
     }
   }
 
-  def levenshteinDist(s1: String, s2: String) = {
-    val v1:Vector[Int] = (0 to s2.length).toVector
+  def levenshteinDist(s1: String, s2: String): Int = {
+    val v1: Vector[Int] = (0 to s2.length).toVector
 
     val lastRow = s1.toLowerCase.zipWithIndex.foldLeft(v1) { case (prevRow, (c1, i)) =>
       s2.toLowerCase.zipWithIndex.foldLeft(Vector(i + 1)) { case (curRow, (c2, j)) =>
@@ -32,7 +34,6 @@ class Wordlookup {
           prevRow(j) + cost          // substitution
         ).min
       }
-
     }
     lastRow.last
   }
