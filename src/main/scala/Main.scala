@@ -2,13 +2,17 @@ import cats.effect.{IO, IOApp}
 import domain.{Dictionary, DictionaryLoader}
 import domain.models.Noun
 import json.{FileLoader, JsonLoader}
+import com.typesafe.config.ConfigFactory
 import service.Wordlookup
 
 object Main extends IOApp.Simple {
 
+  private val config = ConfigFactory.load()
+  private val maxDistance = config.getInt("wortschatz.max-distance")
+
   private val fileLoader: FileLoader = new JsonLoader
   private val dictionaryLoader: DictionaryLoader[Noun] = new NounDictionaryLoader
-  private val wordlookup: Wordlookup = new Wordlookup
+  private val wordlookup: Wordlookup = new Wordlookup(maxDistance)
 
   def run: IO[Unit] = {
     for {

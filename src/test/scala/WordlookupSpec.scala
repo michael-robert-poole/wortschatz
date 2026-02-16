@@ -7,7 +7,7 @@ import org.scalatest.matchers.should.Matchers
 
 class WordlookupSpec extends AsyncFlatSpec with AsyncIOSpec with Matchers {
 
-  private val wordlookup = new Wordlookup()
+  private val wordlookup = new Wordlookup(2)
   private val nouns = List(
     Noun(Masculine, "Tisch", "Tische", List("table")),
     Noun(Neuter, "Haus", "Häuser", List("house")),
@@ -29,22 +29,33 @@ class WordlookupSpec extends AsyncFlatSpec with AsyncIOSpec with Matchers {
     wordlookup.wordlookup("Wrong", dict) shouldBe "Noun is not on the learning curriculum"
   }
 
-  "Horse vs ors" should "return 2" in {
-    val s1 = "horse"
-    val s2 = "ors"
-    wordlookup.levenshteinDist(s1, s2) shouldBe 2
+  "levenshteinDist" should "return 2 for deletion of prefix and suffix" in {
+    wordlookup.levenshteinDist("horse", "ors") shouldBe 2
   }
 
-  "Execution vs Intention" should "return 5" in {
-    val s1 = "Execution"
-    val s2 = "Intention"
-    wordlookup.levenshteinDist(s1, s2) shouldBe 5
+  it should "return 5 for multiple substitutions" in {
+    wordlookup.levenshteinDist("Execution", "Intention") shouldBe 5
   }
 
-  "Kitten vs kitten" should "return 0" in {
-    val s1 = "Kitten"
-    val s2 = "kitten"
-    wordlookup.levenshteinDist(s1, s2) shouldBe 0
+  it should "return 0 for case-insensitive match" in {
+    wordlookup.levenshteinDist("Kitten", "kitten") shouldBe 0
+  }
+
+  it should "return 3 for mixed insertions and substitutions" in {
+    wordlookup.levenshteinDist("Kitten", "sitting") shouldBe 3
+  }
+
+  it should "return 1 for single character substitution" in {
+    wordlookup.levenshteinDist("a", "b") shouldBe 1
+  }
+
+  it should "return length of non-empty string when other is empty" in {
+    wordlookup.levenshteinDist("", "abc") shouldBe 3
+    wordlookup.levenshteinDist("abc", "") shouldBe 3
+  }
+
+  it should "return 0 for two empty strings" in {
+    wordlookup.levenshteinDist("", "") shouldBe 0
   }
 
   "fuzzy matching" should "suggest the closest word when input is close" in {
