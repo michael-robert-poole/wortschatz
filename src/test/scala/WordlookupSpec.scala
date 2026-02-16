@@ -28,4 +28,22 @@ class WordlookupSpec extends AsyncFlatSpec with AsyncIOSpec with Matchers {
   it should "return a not found message when Noun does not exist" in {
     wordlookup.wordlookup("Wrong", dict) shouldBe "Noun is not on the learning curriculum"
   }
+
+  "Horse vs ors" should "return 2" in {
+    val s1 = "horse"
+    val s2 = "ors"
+    wordlookup.levenshteinDist(s1, s2) shouldBe 2
+  }
+
+  "Execution vs Intention" should "return 5" in {
+    val s1 = "Execution"
+    val s2 = "Intention"
+    wordlookup.levenshteinDist(s1, s2) shouldBe 5
+  }
+
+  "Kitten vs Kitten" should "return 5" in {
+    val s1 = "Kitten"
+    val s2 = "kitten"
+    wordlookup.levenshteinDist(s1, s2) shouldBe 0
+  }
 }
