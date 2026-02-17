@@ -1,6 +1,6 @@
 import cats.effect.testing.scalatest.AsyncIOSpec
-import domain.Dictionary
-import domain.models.{Feminine, Masculine, Neuter, Noun}
+import domain.{Feminine, Masculine, Neuter, Noun}
+import infrastructure.Dictionary
 import service.Wordlookup
 import org.scalatest.flatspec.AsyncFlatSpec
 import org.scalatest.matchers.should.Matchers

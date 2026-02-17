@@ -1,4 +1,4 @@
-package domain.models
+package domain
 
 sealed trait Article
 case object Der extends Article

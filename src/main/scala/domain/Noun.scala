@@ -1,4 +1,4 @@
-package domain.models
+package domain
 
 sealed trait Gender
 case object Masculine extends Gender

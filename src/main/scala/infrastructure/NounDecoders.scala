@@ -1,6 +1,6 @@
-package json
+package infrastructure
 
-import domain.models._
+import domain.{Feminine, Gender, Masculine, Neuter, Noun}
 import io.circe.Decoder
 import io.circe.generic.semiauto.deriveDecoder
 

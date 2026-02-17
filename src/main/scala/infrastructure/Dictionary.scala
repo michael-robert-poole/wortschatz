@@ -1,6 +1,6 @@
-package domain
+package infrastructure
 
-import domain.models.Noun
+import domain.Noun
 
 object Dictionary {
   def buildLookup(nouns: List[Noun]): Map[String, Noun] =

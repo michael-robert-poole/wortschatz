@@ -1,7 +1,6 @@
 import cats.effect.{IO, IOApp}
-import domain.{Dictionary, DictionaryLoader}
-import domain.models.Noun
-import json.{FileLoader, JsonLoader}
+import domain.Noun
+import infrastructure.{Dictionary, DictionaryLoader, FileLoader, JsonLoader, NounDictionaryLoader}
 import com.typesafe.config.ConfigFactory
 import service.{ArticleQuiz, ModeSelector, VocabMode, Wordlookup}
 

@@ -1,6 +1,6 @@
 package service
 
-import domain.models.{Article, Noun}
+import domain.{Article, Noun}
 
 class Wordlookup(maxDistance: Int) {
 

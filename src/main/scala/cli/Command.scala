@@ -1,4 +1,4 @@
-package domain
+package cli
 
 sealed trait Command
 case object Quiz extends Command

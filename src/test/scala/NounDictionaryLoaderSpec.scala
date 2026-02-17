@@ -1,4 +1,5 @@
 import cats.effect.testing.scalatest.AsyncIOSpec
+import infrastructure.NounDictionaryLoader
 import org.scalatest.flatspec.AsyncFlatSpec
 import org.scalatest.matchers.should.Matchers
 

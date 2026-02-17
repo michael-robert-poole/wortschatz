@@ -1,8 +1,8 @@
 package service
 
 import cats.effect.IO
-import domain.{Command, CommandError, Quiz, Vocab}
-import domain.models.Noun
+import cli.{Command, CommandError, Quiz, Vocab}
+import domain.Noun
 
 class ModeSelector(vocabMode: VocabMode, articleQuiz: ArticleQuiz) {
 

@@ -1,4 +1,4 @@
-package json
+package infrastructure
 
 import cats.effect.IO
 

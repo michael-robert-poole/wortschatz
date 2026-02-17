@@ -1,7 +1,7 @@
 package service
 
 import cats.effect.IO
-import domain.models.Noun
+import domain.Noun
 
 class VocabMode(wordlookup: Wordlookup) {
 
