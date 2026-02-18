@@ -1,5 +1,6 @@
 package service
 
+import cats.data.NonEmptyMap
 import cats.effect.IO
 import cli.{Command, CommandError, Quiz, Vocab}
 import domain.Noun
@@ -8,7 +9,7 @@ class ModeSelector(vocabMode: VocabMode, articleQuiz: ArticleQuiz) {
 
   private val quitCommands = Set(":quit", ":exit")
 
-  def run(dict: Map[String, Noun]): IO[Unit] = {
+  def run(dict: NonEmptyMap[String, Noun]): IO[Unit] = {
     for {
       _ <- IO.println("Select a mode from:\n" +
         ":vocab\n" +
@@ -17,7 +18,7 @@ class ModeSelector(vocabMode: VocabMode, articleQuiz: ArticleQuiz) {
       command <- IO.blocking(scala.io.StdIn.readLine())
       _ <- if (quitCommands.contains(command.trim.toLowerCase)) IO.println("Auf Wiedersehen!")
            else mapStringToCommand(command) match {
-             case Right(Quiz) => articleQuiz.quizMode().flatMap(IO.println) *> run(dict)
+             case Right(Quiz) => articleQuiz.quizMode(dict) *> run(dict)
              case Right(Vocab) => vocabMode.vocabBuilder(dict) *> run(dict)
              case Left(err) => IO.println(err.err) *> run(dict)
            }

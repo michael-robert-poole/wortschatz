@@ -1,23 +1,22 @@
 package service
 
+import cats.data.NonEmptyMap
+import domain.Noun.formatNoun
 import domain.{Article, Noun}
 
 class Wordlookup(maxDistance: Int) {
 
-  private def formatNoun(noun: Noun): String =
-    s"${Article.articleLookup(noun.gender)} ${noun.word} (plural: ${noun.plural}) translates to ${noun.meanings.mkString(", ")}"
-
-  def wordlookup(word: String, dict: Map[String, Noun]): String = {
-    dict.get(word.toLowerCase) match {
+  def wordlookup(word: String, dict: NonEmptyMap[String, Noun]): String = {
+    dict.lookup(word.toLowerCase) match {
       case Some(value) => formatNoun(value)
       case None =>
-        val candidates = dict.map { case (k, _) => (k, levenshteinDist(k, word)) }.filter(_._2 <= maxDistance)
+        val candidates = dict.toSortedMap.map { case (k, _) => (k, levenshteinDist(k, word)) }.filter(_._2 <= maxDistance)
         if (candidates.isEmpty) {
           "Noun is not on the learning curriculum"
         } else {
           val minDist = candidates.values.min
           val bestKey = candidates.filter(_._2 == minDist).keys.min
-          val noun = dict(bestKey)
+          val noun = dict.lookup(bestKey).get
           s"Did you mean: ${noun.word}?\n${formatNoun(noun)}"
         }
     }
